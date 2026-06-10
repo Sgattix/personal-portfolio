@@ -1,0 +1,252 @@
+{
+  "projects": [
+    {
+      "id": "omnisys-plugin-hider",
+      "title": "Omnisys Plugin Hider",
+      "description": "\"A simple plugin to hide other plugins\" this was the claim of the plugin, but it was actually much more than that. It was a plugin designed to hide the presence of other plugins on a Minecraft server, making it harder for players to detect and identify them. It achieved this by intercepting and modifying various server events and responses related to plugin information.",
+      "technologies": ["Java", "Spigot API", "NoteblockAPI"],
+      "link": "/assets/files/omnisys-plugin-hider/Omnisys-Plugin-Hider-1.0.2-HOTFIX.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-12T11:00:00.000Z",
+      "thumbnail": "/assets/images/omnisys-plugin-hider/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [
+        "Plugin Hiding",
+        "Server Software Hiding",
+        "CommandPreProcessEvent blocking"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-plugin-hider",
+      "versions": [
+        {
+          "id": "1.0.2-HOTFIX",
+          "title": "Omnisys Plugin Hider v1.0.2-HOTFIX - The Stealth Mode",
+          "description": "This version of the Omnisys Plugin Hider focused on improving the stealth capabilities of the plugin. It included enhancements to the plugin hiding mechanism, making it more effective at concealing the presence of other plugins on the server. Additionally, it introduced new features to hide server software information and block certain commands that could reveal plugin details.",
+          "date": "2022-03-12T15:08:00.000Z",
+          "features": [
+            "Plugin Hiding",
+            "Server Software Hiding",
+            "CommandPreprocessEvent blocking"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "omnisuggester",
+      "title": "OmniSuggester",
+      "description": "A Discord bot designed to facilitate feature suggestions for my OmniCraft Minecraft server. It allows users to submit their ideas, upvote or downvote existing suggestions, and provides an anonymous submission option to encourage honest feedback.",
+      "technologies": ["TypeScript", "Discord.js", "Node.js"],
+      "link": "Private",
+      "category": "discord-bot",
+      "date": "2022-02-27T11:00:00.000Z",
+      "thumbnail": "/assets/images/omnisuggester/1.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [
+        "Feature suggestions",
+        "Upvote/downvote system",
+        "Anonymous submissions"
+      ],
+      "repository": "https://github.com/Sgattix/omnisuggester",
+      "versions": [
+        {
+          "id": "1.0.0",
+          "title": "OmniSuggester v1.0.0-release - The community's voice",
+          "description": "The first version of OmniSuggester was a simple bot that allowed users to submit their suggestions for the OmniCraft server. It had a basic upvote/downvote system and an anonymous submission option.",
+          "date": "2022-02-23T14:07:00.000Z",
+          "features": [
+            "Feature suggestions",
+            "Upvote/downvote system",
+            "Anonymous submissions"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "first-java-standalone-program",
+      "title": "First Java Standalone Program",
+      "description": "My first ever Java standalone program. It was a simple console application that allowed users to input their name and then greeted them with a personalized message. It was a great learning experience and helped me understand the basics of Java programming.",
+      "technologies": ["Java"],
+      "link": "Private",
+      "category": "java-application",
+      "date": "2021-12-23T00:00:00.000Z",
+      "thumbnail": "/assets/images/first-java-standalone-program/1.png",
+      "difficulty": 1,
+      "proudness": 0,
+      "features": [
+        "Personalized greeting based on user input",
+        "Handling different data types input"
+      ],
+      "repository": "https://github.com/Sgattix/first-java-program"
+    },
+    {
+      "id": "omnisys-minecraft-plugin",
+      "title": "Omnisys Minecraft Plugin",
+      "description": "This was my first ever Minecraft plugin, developed for the OmniCraft Minecraft server. It wasn't that meaningful, but it was a great learning experience and a stepping stone to more complex projects.",
+      "technologies": ["Java", "Spigot API"],
+      "link": "/assets/files/omnisys-minecraft-plugin/omnisys-1.0.0.jar",
+      "category": "minecraft-plugin",
+      "date": "2021-12-08T00:00:00.000Z",
+      "thumbnail": "/assets/images/omnisys-minecraft-plugin/1.png",
+      "difficulty": 2,
+      "proudness": 0,
+      "features": [],
+      "repository": "https://github.com/Sgattix/omnisys-minecraft-plugin",
+      "versions": [
+        {
+          "id": "1.0.0-alpha",
+          "title": "Omnisys Minecraft Plugin v1.0.0-alpha - The first plugin",
+          "description": "The first version of the Omnisys Minecraft plugin was a simple plugin that added a few basic commands and features to the OmniCraft server.",
+          "date": "2021-12-08T00:00:00.000Z",
+          "features": ["God mode", "Join and leave messages", "Kill command"]
+        },
+        {
+          "id": "1.1.0-alpha",
+          "title": "Omnisys Minecraft Plugin v1.1.0-alpha -",
+          "description": "The second version of the Omnisys Minecraft plugin added more features and commands, including a random teleport command, spawn setting command, and various gamemode command abbreviations.",
+          "date": "2022-02-01T15:16:00.000Z",
+          "features": [
+            "Config Management",
+            "Gamemode Command Abbreviations",
+            "Random Teleport",
+            "Spawn Setting",
+            "GUIs",
+            "More..."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "omnicraft-website",
+      "title": "OmniCraft Website",
+      "description": "The official website for the OmniCraft Minecraft server.",
+      "technologies": ["HTML", "CSS", "JavaScript"],
+      "link": "https://sgattix.github.io/omnicraft-website/",
+      "category": "web-development",
+      "date": "2021-09-05T00:00:00.000Z",
+      "thumbnail": "/assets/images/omnicraft-website/1.png",
+      "difficulty": 1,
+      "proudness": 1.5,
+      "features": [
+        "Server information",
+        "Player statistics",
+        "Event announcements",
+        "Community forums"
+      ],
+      "repository": "https://github.com/Sgattix/omnicraft-website",
+      "versions": [
+        {
+          "id": "1.0-beta",
+          "title": "OmniCraft Website v1.0-beta - The first ever website",
+          "description": "The first version of the OmniCraft website was a simple static site with basic information about the server and its features.",
+          "date": "2021-07-22T00:00:00.000Z",
+          "features": [
+            "Server information",
+            "Player statistics",
+            "Event announcements",
+            "Community forums"
+          ]
+        },
+        {
+          "id": "1.0.0-release",
+          "title": "OmniCraft Website v1.0.0-release - The launch",
+          "description": "The official launch of the OmniCraft website. This version included a more polished design, improved navigation, and additional features such as player statistics and event announcements.",
+          "date": "2021-08-01T00:00:00.000Z",
+          "features": [
+            "Server information",
+            "Player statistics",
+            "Event announcements",
+            "Community forums"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "omnisys-discord-bot",
+      "title": "Omnisys",
+      "description": "A multi-purpose Discord bot with a variety of features to enhance my discord server user experience.",
+      "technologies": ["TypeScript", "Discord.js", "Node.js"],
+      "link": "https://github.com/Sgattix/omnisys-discord-bot",
+      "category": "discord-bot",
+      "date": "2021-08-12T09:08:14.000Z",
+      "thumbnail": "/assets/images/omnisys-discord-bot/1.png",
+      "difficulty": 2,
+      "proudness": 3,
+      "features": [
+        "Modular command system",
+        "Customizable prefixes",
+        "Welcome messages",
+        "Role management",
+        "Music playback",
+        "Join and leave messages",
+        "Auto-moderation tools",
+        "Information commands",
+        "Ticketing System"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-discord-bot",
+      "versions": [
+        {
+          "id": "1.0.0-alpha",
+          "title": "Omnisys v1.0.0-alpha - Love at first sight",
+          "description": "Omnisys was actually my first programming project. Here's where I wrote my first line of code.",
+          "date": "2021-08-14T09:08:14.000Z",
+          "features": ["Server information"]
+        },
+        {
+          "id": "1.1.0-alpha",
+          "title": "Omnisys v1.1.0-alpha - The evolution",
+          "description": "After a few weeks of development, Omnisys had evolved into a more feature-rich bot with a modular command system and customizable prefixes.",
+          "date": "2021-10-13T09:08:14.000Z",
+          "features": [
+            "Modular command system",
+            "Customizable prefixes",
+            "Welcome messages",
+            "Role management",
+            "Music playback",
+            "Join and leave messages",
+            "Auto-moderation tools",
+            "Information commands"
+          ]
+        },
+        {
+          "id": "2.0.0-alpha",
+          "title": "Omnisys v2.0.0-alpha - The database integration",
+          "description": "The biggest update to Omnisys was the integration of a database to store user data and settings. This allowed for more advanced features and better performance.",
+          "date": "2021-11-01T11:00:00.000Z",
+          "features": [
+            "Database integration",
+            "Persistent user data",
+            "Improved performance",
+            "New commands and features"
+          ]
+        },
+        {
+          "id": "2.1.0-alpha",
+          "title": "Omnisys v2.1.0-alpha - TypeScript migration",
+          "description": "The latest update to Omnisys was the migration from JavaScript to TypeScript. This allowed for better code quality, improved maintainability, and easier debugging.",
+          "date": "2021-11-06T11:00:00.000Z",
+          "features": [
+            "TypeScript migration",
+            "Improved code quality",
+            "Better maintainability",
+            "Easier debugging"
+          ]
+        },
+        {
+          "id": "1.0.0-tickets",
+          "title": "Omnisys v1.0.0-tickets - Ticketing System",
+          "description": "The ticketing system was one of the most requested features for Omnisys. It allows users to create support tickets and receive assistance from moderators and staff members.",
+          "date": "2022-02-23T16:55:00.000Z",
+          "features": ["Ticketing System"]
+        },
+        {
+          "id": "1.0.0-music",
+          "title": "Omnisys v1.0.0-music - Music System",
+          "description": "The music system was another highly requested feature for Omnisys. It allows users to play music in voice channels, create playlists, and control playback with various commands.",
+          "date": "2023-03-13T17:03:00.000Z",
+          "features": ["Music System"]
+        }
+      ]
+    }
+  ]
+}
