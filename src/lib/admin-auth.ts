@@ -5,12 +5,30 @@ import { cookies } from "next/headers";
 const ADMIN_COOKIE_NAME = "portfolio_admin_session";
 const ADMIN_SESSION_TTL_MS = 1000 * 60 * 60 * 8;
 
-function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD ?? "admin";
+const isProduction = process.env.NODE_ENV === "production";
+
+// Dev-only fallbacks. In production missing env vars must fail closed,
+// otherwise anyone could log in with "admin" or forge session cookies.
+function getAdminPassword(): string | null {
+  return process.env.ADMIN_PASSWORD || (isProduction ? null : "admin");
 }
 
 function getAdminSecret(): string {
-  return process.env.ADMIN_SECRET ?? "portfolio-admin-dev-secret";
+  const secret =
+    process.env.ADMIN_SECRET ||
+    (isProduction ? null : "portfolio-admin-dev-secret");
+
+  if (!secret) {
+    throw new Error("ADMIN_SECRET must be set in production.");
+  }
+
+  return secret;
+}
+
+function safeEqual(left: string, right: string): boolean {
+  const leftHash = crypto.createHash("sha256").update(left).digest();
+  const rightHash = crypto.createHash("sha256").update(right).digest();
+  return crypto.timingSafeEqual(leftHash, rightHash);
 }
 
 function createSignature(value: string): string {
@@ -57,14 +75,23 @@ function verifySessionToken(token: string): boolean {
 }
 
 export async function verifyAdminPassword(password: string): Promise<boolean> {
-  return password === getAdminPassword();
+  const expected = getAdminPassword();
+  return expected !== null && password.length > 0 && safeEqual(password, expected);
 }
 
 export async function isAdminAuthenticated(): Promise<boolean> {
   const cookieStore = await cookies();
   const token = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
 
-  return token ? verifySessionToken(token) : false;
+  if (!token) {
+    return false;
+  }
+
+  try {
+    return verifySessionToken(token);
+  } catch {
+    return false;
+  }
 }
 
 export async function requireAdminSession(): Promise<boolean> {
@@ -77,7 +104,7 @@ export async function setAdminSession(): Promise<void> {
   cookieStore.set(ADMIN_COOKIE_NAME, createSessionToken(), {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: isProduction,
     path: "/",
     maxAge: ADMIN_SESSION_TTL_MS / 1000,
   });

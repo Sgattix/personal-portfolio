@@ -1,17 +1,39 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/ui/select";
 import Header from "@/components/ui/header";
 import ProjectCard from "@/components/project/ProjectCard";
 import { readProjects } from "@/lib/project-data";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
+import ProjectControls from "@/components/ProjectControls";
 
 export const dynamic = "force-dynamic";
 
-async function Page() {
-  const filteredProjects = await readProjects();
+async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const projects = await readProjects(await isAdminAuthenticated());
+
+  const selectedCategory = (await searchParams).category as string | undefined;
+  const selectedSort = (await searchParams).sort as string | undefined;
+
+  const sortedProjects = [...projects].sort((a, b) => {
+    if (selectedSort === "newest") {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    } else if (selectedSort === "oldest") {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }
+    const aVal = a[selectedSort as keyof typeof a];
+    const bVal = b[selectedSort as keyof typeof b];
+
+    if (!aVal || !bVal) {
+      return 0;
+    }
+    return aVal > bVal ? 1 : -1;
+  });
+
+  const filteredProjects = selectedCategory
+    ? sortedProjects.filter((project) => project.category === selectedCategory)
+    : sortedProjects;
 
   return (
     <div className="bg-black min-h-screen">
@@ -21,32 +43,11 @@ async function Page() {
           <div className="flex justify-between items-center">
             <Header title="My Projects" subtitle="PROJECTS" />
             <div className="flex gap-4">
-              <Select>
-                <SelectTrigger className="bg-neutral-950 text-white border-0">
-                  Sort By
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="oldest">Oldest</SelectItem>
-                  <SelectItem value="mostPopular">Most Popular</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select>
-                <SelectTrigger className="bg-neutral-950 text-white border-0">
-                  Category
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="webDevelopment">
-                    Web Development
-                  </SelectItem>
-                  <SelectItem value="mobileApps">Mobile Apps</SelectItem>
-                  <SelectItem value="dataScience">Data Science</SelectItem>
-                  <SelectItem value="machineLearning">
-                    Machine Learning
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              <ProjectControls
+                selectedSort={selectedSort}
+                selectedCategory={selectedCategory}
+                projects={projects}
+              />
             </div>
           </div>
 

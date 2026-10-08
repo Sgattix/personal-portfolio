@@ -1,7 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
-
 import type { Project, ProjectVersion } from "@/lib/project-types";
+import { readProjectsFile, writeProjectsFile } from "@/lib/storage";
 
 export type ContributionKind = "project" | "release" | "milestone";
 
@@ -18,6 +16,7 @@ export type ContributionItem = {
 export type ContributionCell = {
   date: string;
   count: number;
+  githubCount: number;
   level: 0 | 1 | 2 | 3 | 4;
   items: ContributionItem[];
 };
@@ -31,17 +30,10 @@ export type ContributionStats = {
   totalItems: number;
   activeDays: number;
   totalCount: number;
+  githubCount: number;
   firstDate?: string;
   lastDate?: string;
 };
-
-const projectsFilePath = path.join(
-  process.cwd(),
-  "src",
-  "app",
-  "config",
-  "projects.json",
-);
 
 type ProjectsFile = {
   projects: Project[];
@@ -161,14 +153,20 @@ export function sortProjects(projects: Project[]): Project[] {
   );
 }
 
-export async function readProjects(): Promise<Project[]> {
-  const raw = await readFile(projectsFilePath, "utf8");
+export async function readProjects(
+  isAdmin: boolean = false,
+): Promise<Project[]> {
+  const raw = await readProjectsFile();
   const parsed = JSON.parse(raw) as Partial<ProjectsFile>;
   const projects = Array.isArray(parsed.projects) ? parsed.projects : [];
 
   return sortProjects(
     projects
-      .filter((project): project is Project => Boolean(project && project.id))
+      .filter(
+        (project): project is Project =>
+          Boolean(project && project.id) &&
+          (isAdmin || project.link !== "Private"),
+      )
       .map((project) => normalizeProject(project)),
   );
 }
@@ -180,11 +178,7 @@ export async function writeProjects(projects: Project[]): Promise<void> {
     ),
   };
 
-  await writeFile(
-    projectsFilePath,
-    `${JSON.stringify(payload, null, 2)}\n`,
-    "utf8",
-  );
+  await writeProjectsFile(`${JSON.stringify(payload, null, 2)}\n`);
 }
 
 export function createBlankProject(): Project {
@@ -207,12 +201,41 @@ function toDateKey(value: string): string {
   return new Date(value).toISOString().slice(0, 10);
 }
 
-function levelFromCount(count: number): 0 | 1 | 2 | 3 | 4 {
-  if (count <= 0) return 0;
-  if (count === 1) return 1;
-  if (count <= 2) return 2;
-  if (count <= 4) return 3;
-  return 4;
+function toLocalDateKey(date: Date): string {
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${date.getFullYear()}-${month}-${day}`;
+}
+
+// Commit-heavy GitHub days dwarf one-off launches, so fixed thresholds would
+// max out every coding day. Levels use quartiles of the active days instead,
+// like GitHub does.
+function buildLevelScale(
+  counts: number[],
+): (count: number) => 0 | 1 | 2 | 3 | 4 {
+  const active = counts.filter((count) => count > 0).sort((a, b) => a - b);
+  const quantile = (q: number) =>
+    active[Math.floor(q * (active.length - 1))] ?? 1;
+  const [q1, q2, q3] = [quantile(0.25), quantile(0.5), quantile(0.75)];
+
+  return (count) => {
+    if (count <= 0) return 0;
+    if (count <= q1) return 1;
+    if (count <= q2) return 2;
+    if (count <= q3) return 3;
+    return 4;
+  };
+}
+
+function earliestGithubDate(
+  githubDays: Map<string, number>,
+): string | undefined {
+  let earliest: string | undefined;
+  for (const key of githubDays.keys()) {
+    if (!earliest || key < earliest) earliest = key;
+  }
+  // GitHub dates are plain calendar days; parse them as local midnight.
+  return earliest ? `${earliest}T00:00:00` : undefined;
 }
 
 function parseDate(value: string): Date {
@@ -274,15 +297,19 @@ export function buildContributionItems(
 
 export function buildContributionWeeks(
   items: ContributionItem[],
+  githubDays: Map<string, number> = new Map(),
   referenceDate: Date = new Date(),
 ): ContributionWeek[] {
   const normalizedReference = endOfDay(referenceDate);
 
+  const earliestGithub = earliestGithubDate(githubDays);
+  const startTimes = [
+    ...items.map((item) => parseDate(item.date).getTime()),
+    ...(earliestGithub ? [parseDate(earliestGithub).getTime()] : []),
+  ];
   const firstDate =
-    items.length > 0
-      ? new Date(
-          Math.min(...items.map((item) => parseDate(item.date).getTime())),
-        )
+    startTimes.length > 0
+      ? new Date(Math.min(...startTimes))
       : new Date(normalizedReference.getFullYear(), 0, 1);
 
   const cursorStart = startOfWeek(firstDate);
@@ -296,6 +323,12 @@ export function buildContributionWeeks(
     itemMap.set(key, existing);
   }
 
+  const totals = new Map<string, number>(githubDays);
+  for (const [key, dayItems] of itemMap) {
+    totals.set(key, (totals.get(key) ?? 0) + dayItems.length);
+  }
+  const levelFromCount = buildLevelScale([...totals.values()]);
+
   const weeks: ContributionWeek[] = [];
   const cursor = new Date(cursorStart);
 
@@ -305,17 +338,23 @@ export function buildContributionWeeks(
 
     for (let index = 0; index < 7; index += 1) {
       const day = new Date(cursor);
-      const key = toDateKey(day.toISOString());
+      // Cells are local calendar days; keying them via UTC shifts every
+      // square by one day in timezones ahead of UTC.
+      const key = toLocalDateKey(day);
       const dayItems = itemMap.get(key) ?? [];
 
       if (!monthLabel && day.getDate() === 1) {
         monthLabel = day.toLocaleString("en-US", { month: "short" });
       }
 
+      const githubCount = githubDays.get(key) ?? 0;
+      const count = dayItems.length + githubCount;
+
       cells.push({
         date: day.toISOString(),
-        count: dayItems.length,
-        level: levelFromCount(dayItems.length),
+        count,
+        githubCount,
+        level: levelFromCount(count),
         items: dayItems,
       });
 
@@ -333,6 +372,7 @@ export function buildContributionWeeks(
 
 export function buildContributionStats(
   items: ContributionItem[],
+  githubDays: Map<string, number> = new Map(),
 ): ContributionStats {
   const sorted = [...items].sort(
     (left, right) =>
@@ -346,11 +386,26 @@ export function buildContributionStats(
     dayCounts.set(key, (dayCounts.get(key) ?? 0) + 1);
   }
 
+  let githubCount = 0;
+  for (const [key, count] of githubDays) {
+    githubCount += count;
+    dayCounts.set(key, (dayCounts.get(key) ?? 0) + count);
+  }
+
+  const earliestGithub = earliestGithubDate(githubDays);
+  const firstLocal = sorted[0]?.date;
+  const firstDate =
+    earliestGithub &&
+    (!firstLocal || parseDate(earliestGithub) < parseDate(firstLocal))
+      ? earliestGithub
+      : firstLocal;
+
   return {
     totalItems: sorted.length,
     activeDays: dayCounts.size,
-    totalCount: sorted.length,
-    firstDate: sorted[0]?.date,
+    totalCount: sorted.length + githubCount,
+    githubCount,
+    firstDate,
     lastDate: sorted[sorted.length - 1]?.date,
   };
 }

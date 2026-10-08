@@ -113,8 +113,8 @@ export function ContributionGraph({
           </h2>
           {!compact && (
             <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-400">
-              A GitHub-style heatmap of project launches, release updates, and
-              major milestones.
+              Project launches, release updates, and milestones merged with
+              GitHub contribution activity.
             </p>
           )}
         </div>
@@ -131,6 +131,9 @@ export function ContributionGraph({
               {visibleCell.count === 0
                 ? "No activity recorded"
                 : `${visibleCell.count} contribution${visibleCell.count === 1 ? "" : "s"}`}
+              {visibleCell.githubCount > 0 &&
+                visibleCell.items.length > 0 &&
+                ` (${visibleCell.items.length} project, ${visibleCell.githubCount} GitHub)`}
             </p>
           </div>
         )}
@@ -171,8 +174,8 @@ export function ContributionGraph({
                   {week.cells.map((cell) => {
                     const content = (
                       <button
-                        type="button"
                         key={cell.date}
+                        type="button"
                         onMouseEnter={() => setSelectedCell(cell)}
                         onFocus={() => setSelectedCell(cell)}
                         className={`rounded-[3px] border transition-transform duration-200 hover:-translate-y-[1px] hover:scale-110 ${compact ? "h-2.5 w-2.5" : "h-3 w-3"} ${getLevelClass(cell.level)}`}
@@ -193,9 +196,15 @@ export function ContributionGraph({
         <div className="mt-5 flex flex-col gap-4 border-t border-neutral-800 pt-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap gap-4 text-sm text-neutral-400">
             <span>
-              <strong className="text-white">{stats.totalItems}</strong> total
+              <strong className="text-white">{stats.totalItems}</strong> project
               entries
             </span>
+            {stats.githubCount > 0 && (
+              <span>
+                <strong className="text-white">{stats.githubCount}</strong>{" "}
+                GitHub contributions
+              </span>
+            )}
             <span>
               <strong className="text-white">{stats.activeDays}</strong> active
               days

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { ContributionGraph } from "@/components/contributions/ContributionGraph";
 import { Button } from "@/components/ui/button";
 import { readProjects } from "@/lib/project-data";
+import { fetchGithubContributionDays } from "@/lib/github-contributions";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { deleteProjectAction, logoutAction } from "./actions";
 import ProjectCard from "@/components/project/ProjectCard";
@@ -32,10 +33,19 @@ export default async function Page({
     redirect("/admin/login");
   }
 
-  const projects = await readProjects();
+  const [projects, githubDays] = await Promise.all([
+    readProjects(authenticated),
+    fetchGithubContributionDays(),
+  ]);
   const contributionItems = buildContributionItems(projects);
-  const contributionStats = buildContributionStats(contributionItems);
-  const contributionWeeks = buildContributionWeeks(contributionItems);
+  const contributionStats = buildContributionStats(
+    contributionItems,
+    githubDays,
+  );
+  const contributionWeeks = buildContributionWeeks(
+    contributionItems,
+    githubDays,
+  );
   const params = searchParams ? await searchParams : undefined;
 
   const sortedProjects = projects.sort((a, b) => {
@@ -100,7 +110,9 @@ export default async function Page({
           )}
           {params?.error && (
             <p className="mt-5 rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-              Something went wrong while processing the request.
+              {params.error === "storage-write"
+                ? "Could not write to disk. This admin panel needs a host with a writable, persistent filesystem (not serverless)."
+                : "Something went wrong while processing the request."}
             </p>
           )}
         </section>

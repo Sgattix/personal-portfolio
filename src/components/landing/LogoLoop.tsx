@@ -276,10 +276,10 @@ export const LogoLoop = React.memo<LogoLoopProps>(
           const content = (
             <span
               className={cx(
-                'inline-flex items-center',
-                'motion-reduce:transition-none',
+                "inline-flex items-center",
+                "motion-reduce:transition-none *:[&>svg]:h-[var(--logoloop-logoHeight)] [&>svg]:w-auto [&>svg]:block [&>svg]:object-contain",
                 scaleOnHover &&
-                  'transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120'
+                  "transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/item:scale-120",
               )}
               aria-hidden={!!nodeItem.href && !nodeItem.ariaLabel}
             >

@@ -21,7 +21,7 @@ const Navbar: FunctionComponent = () => {
   }, []);
 
   return (
-    <nav className="w-full h-fit p-8 lg:flex block justify-between items-center fixed top-0 z-50 overflow-hidden gap-10 px-[17%] transition-all duration-300 hover:opacity-100 hover:backdrop-blur-xs hover:bg-black/50">
+    <nav className="w-full h-fit p-8 lg:flex block justify-between items-center fixed top-0 z-50 overflow-hidden gap-10 px-[17%] transition-all duration-300 hover:opacity-100 backdrop-blur-xs bg-black/50">
       <div className=" flex items-center gap-5">
         <Image
           src="/assets/images/logo.png"

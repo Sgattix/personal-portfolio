@@ -10,6 +10,7 @@ import {
   groupContributionItemsByYear,
 } from "@/lib/project-data";
 import { readProjects } from "@/lib/project-data";
+import { fetchGithubContributionDays } from "@/lib/github-contributions";
 
 export const metadata = {
   title: "Alessandro Sgattoni | Contributions",
@@ -28,17 +29,20 @@ function formatDate(value: string): string {
 }
 
 export default async function Page() {
-  const projects = await readProjects();
+  const [projects, githubDays] = await Promise.all([
+    readProjects(),
+    fetchGithubContributionDays(),
+  ]);
   const items = buildContributionItems(projects);
-  const stats = buildContributionStats(items);
-  const weeks = buildContributionWeeks(items);
+  const stats = buildContributionStats(items, githubDays);
+  const weeks = buildContributionWeeks(items, githubDays);
   const groupedByYear = groupContributionItemsByYear(items);
 
   const timelineData: TimelineEntry[] = groupedByYear.map(
     ({ year, items: yearItems }) => ({
       title: year,
       content: (
-        <div className="space-y-4 text-white">
+        <div className="space-y-4 text-white" key={year}>
           <p className="text-sm text-neutral-400">
             {yearItems.length} recorded contribution
             {yearItems.length === 1 ? "" : "s"}.

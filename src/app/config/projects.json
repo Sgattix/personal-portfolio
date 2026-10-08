@@ -1,10 +1,498 @@
 {
   "projects": [
     {
+      "id": "modern-bedwars-website",
+      "title": "Modern Bedwars Website",
+      "description": "This was a website built for the Modern Bedwars Minecraft server. The website was built using the (MySQL)NN stack and features a landing page, server information, and a player statistics page.",
+      "technologies": [
+        "MySQL",
+        "Nest.js",
+        "Next.js"
+      ],
+      "link": "https://image.titanet.it",
+      "category": "web-app",
+      "date": "2025-12-27T11:00:00.000Z",
+      "thumbnail": "/assets/images/modern-bedwars-website/thumbnail.png",
+      "difficulty": 2,
+      "proudness": 3,
+      "features": [
+        "Landing Page",
+        "Server Information",
+        "Player Statistics",
+        "Match History",
+        "Leaderboards"
+      ],
+      "repository": "Private"
+    },
+    {
+      "id": "cashflow",
+      "title": "CashFlow",
+      "description": "A user-friendly expense tracker built with Next.js and TailwindCSS",
+      "technologies": [
+        "Next.js",
+        "TailwindCSS"
+      ],
+      "link": "https://github.com/Sgattix/cashflow",
+      "category": "web-app",
+      "date": "2025-12-23T15:52:00.000Z",
+      "thumbnail": "/assets/images/cashflow/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [],
+      "repository": "https://github.com/Sgattix/cashflow"
+    },
+    {
+      "id": "ecommerce-products-page",
+      "title": "EShop Products Page",
+      "description": "An headless React + Tailwind dynamic page to display products in an e-commerce-like page",
+      "technologies": [
+        "React.js",
+        "TailwindCSS"
+      ],
+      "link": "https://github.com/Sgattix/ecommerce-products-page",
+      "category": "web-app",
+      "date": "2025-12-21T15:07:00.000Z",
+      "thumbnail": "/assets/images/accordion-component/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [
+        "Product listing",
+        "Wishlist creation",
+        "Coupon discount",
+        "Cart"
+      ],
+      "repository": "https://github.com/Sgattix/ecommerce-products-page"
+    },
+    {
+      "id": "trivia-champs",
+      "title": "TriviaChamps",
+      "description": "A Next.js + TailwindCSS trivia game with randomly generated questions",
+      "technologies": [
+        "Next.js",
+        "OpentdbAPI",
+        "TailwindCSS"
+      ],
+      "link": "https://github.com/Sgattix/trivia-champs",
+      "category": "web-app",
+      "date": "2025-06-17T14:40:00.000Z",
+      "thumbnail": "/assets/images/trivia-champs/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [],
+      "repository": "https://github.com/Sgattix/trivia-champs"
+    },
+    {
+      "id": "horizon-meteo",
+      "title": "Horizon Meteo",
+      "description": "A modern weather application built in NextJS + ShadCN",
+      "technologies": [
+        "Next.js",
+        "TailwindCSS",
+        "shadcn/ui"
+      ],
+      "link": "https://github.com/Sgattix/horizon-meteo",
+      "category": "web-app",
+      "date": "2025-06-11T14:48:00.000Z",
+      "thumbnail": "/assets/images/horizon-meteo/1782831042509-0.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [],
+      "repository": "https://github.com/Sgattix/horizon-meteo"
+    },
+    {
+      "id": "tic-tac-toe",
+      "title": "Tic-Tac-Toe",
+      "description": "A tic-tac-toe game built in NextJS + Tailwind",
+      "technologies": [
+        "Next.js",
+        "TailwindCSS"
+      ],
+      "link": "https://github.com/Sgattix/tictactoe",
+      "category": "web-app",
+      "date": "2025-06-10T14:34:00.000Z",
+      "thumbnail": "/assets/images/tic-tac-toe/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [],
+      "repository": "https://github.com/Sgattix/tictactoe"
+    },
+    {
+      "id": "globalx-bot",
+      "title": "GlobalX Bot",
+      "description": "GlobalX discord server's core bot",
+      "technologies": [
+        "Node.js",
+        "Discord API"
+      ],
+      "link": "dsc.gg/globalx-discord",
+      "category": "discord-bot",
+      "date": "2024-04-18T10:31:00.000Z",
+      "thumbnail": "/assets/images/globalx-bot/1782815715223-0.png",
+      "difficulty": 2,
+      "proudness": 3,
+      "features": [
+        "Ticket System"
+      ],
+      "repository": "https://github.com/GlobalX-Studios/globalx-bot"
+    },
+    {
+      "id": "adb-image-getter",
+      "title": "ADB Image Getter",
+      "description": "A little python tool to copy all the photos from your phone to your PC using ADB",
+      "technologies": [
+        "Python",
+        "ADB (Android Debug Bridge)"
+      ],
+      "link": "https://github.com/Sgattix/adb-image-getter",
+      "category": "cli-tool",
+      "date": "2024-04-11T10:00:00.000Z",
+      "thumbnail": "/assets/images/adb-image-getter/thumbnail.png",
+      "difficulty": 0,
+      "proudness": 2,
+      "features": [
+        "Pictures start and end paths picker",
+        "Transfer speed picker"
+      ],
+      "repository": "https://github.com/Sgattix/adb-image-getter"
+    },
+    {
+      "id": "random-number-generator",
+      "title": "Random Number Generator",
+      "description": "A simple HTML, CSS and JavaScript Random Number Generator from 2024",
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "link": "https://sgattix.github.io/random-number-generator/",
+      "category": "web-app",
+      "date": "2024-02-25T11:00:00.000Z",
+      "thumbnail": "/assets/images/random-number-generator/thumbnail.png",
+      "difficulty": 0,
+      "proudness": 1,
+      "features": [
+        "Random number generator",
+        "Generate a number within a specified range",
+        "Generate a sequence of unique numbers"
+      ],
+      "repository": "https://github.com/Sgattix/random-number-generator"
+    },
+    {
+      "id": "digital-clock",
+      "title": "Digital Clock",
+      "description": "A lightweight HTML, CSS and vanilla JavaScript digiral clock",
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
+      "link": "https://sgattix.github.io/digital-clock/src/",
+      "category": "web-app",
+      "date": "2023-09-12T10:00:00.000Z",
+      "thumbnail": "/assets/images/digital-clock/thumbnail.png",
+      "difficulty": 0,
+      "proudness": 2,
+      "features": [],
+      "repository": "https://github.com/Sgattix/digital-clock"
+    },
+    {
+      "id": "development-academy-blog-website",
+      "title": "Development Academy Blog Website",
+      "description": "This was a blog website built for the Development Academy, a platform that provides resources and tutorials for developers. The website was built using the (MySQL)ERN stack and features a landing page, blog page, and individual blog post pages.",
+      "technologies": [
+        "MySQL",
+        "Express.js",
+        "React.js",
+        "Node.js"
+      ],
+      "link": "https://github.com/Sgattix/development-academy-blog-website",
+      "category": "web-app",
+      "date": "2023-06-13T13:51:00.000Z",
+      "thumbnail": "/assets/images/development-academy-blog-website/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [
+        "Landing Page",
+        "Blog Page",
+        "Blog Post Page"
+      ],
+      "repository": "https://github.com/Sgattix/development-academy-blog-website"
+    },
+    {
+      "id": "first-fullstack-website",
+      "title": "My first FullStack website",
+      "description": "This was my first fullstack web application built using the PERN stack.",
+      "technologies": [
+        "PostgreSQL",
+        "Express.js",
+        "React.js",
+        "Node.js"
+      ],
+      "link": "https://github.com/Sgattix/first-fullstack-web-app",
+      "category": "web-app",
+      "date": "2023-06-08T10:00:00.000Z",
+      "thumbnail": "/assets/images/first-fullstack-website/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [],
+      "repository": "https://github.com/Sgattix/first-fullstack-web-app"
+    },
+    {
+      "id": "company-website",
+      "title": "Company Website",
+      "description": "This was a mock company website built using the (MySQL)ERN stack. It was a project to showcase my skills in building a fullstack web application with a focus on frontend and backend development.",
+      "technologies": [
+        "MySQL",
+        "Express.js",
+        "React.js",
+        "Node.js"
+      ],
+      "link": "https://github.com/Sgattix/company-website",
+      "category": "web-app",
+      "date": "2023-06-08T10:00:00.000Z",
+      "thumbnail": "/assets/images/company-website/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [
+        "Landing Page",
+        "Login Page",
+        "Register Page"
+      ],
+      "repository": "https://github.com/Sgattix/company-website"
+    },
+    {
+      "id": "globalx",
+      "title": "GlobalX",
+      "description": "The best GlobalChat solution for Minecraft servers.",
+      "technologies": [
+        "Java",
+        "BungeeCord API"
+      ],
+      "link": "https://www.spigotmc.org/resources/⭐-globalx-easiest-globalchat-plugin-on-spigotmc.102941/",
+      "category": "minecraft-plugin",
+      "date": "2022-07-27T09:40:00.000Z",
+      "thumbnail": "/assets/images/globalx/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 3,
+      "features": [
+        "Prefix globalchatting (!<message> without using /gc etc.)",
+        "GlobalToggle",
+        "Cooldown",
+        "Private messages",
+        "Global Chatting",
+        "Scheduled messages",
+        "Server Grouping system",
+        "Chat channels management"
+      ],
+      "repository": "https://github.com/GlobalX-Studios/GlobalX"
+    },
+    {
+      "id": "omnisys-hubblocks",
+      "title": "Omnisys HubBlocks",
+      "description": "A Minecraft plugin that allows players to have custom hub blocks in the game. It provides a way to create interactive elements in the hub area, enhancing the player experience and adding a unique touch to the server.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": "/assets/files/omnisys-hubblocks/Omnisys-HubBlocks-1.0.0.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-04-21T17:03:00.000Z",
+      "thumbnail": "/assets/images/omnisys-hubblocks/1.gif",
+      "difficulty": 2,
+      "proudness": 3,
+      "features": [
+        "Custom Hub Blocks",
+        "Interactive Elements"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-hubblocks"
+    },
+    {
+      "id": "omnisys-rankspro",
+      "title": "Omnisys RanksPro",
+      "description": "A Minecraft plugin that allows server administrators to manage player ranks and permissions. It provides a way to create and customize ranks, assign permissions, and manage player access to various features on the server.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": "/assets/files/omnisys-rankspro/Omnisys-RanksPro-1.0.0.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-04-06T17:03:00.000Z",
+      "thumbnail": "/assets/images/omnisys-rankspro/thumbnail.png",
+      "difficulty": 1,
+      "proudness": 2,
+      "features": [
+        "Rank Management",
+        "Permission Management"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-rankspro"
+    },
+    {
+      "id": "omnisys-joinmessages",
+      "title": "Omnisys JoinMessages",
+      "description": "\"Omnicraft Network Join Messages\" (2022), this plugin allowed server administrators to customize the join and leave messages that players see when they enter or exit the server.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": ".\\assets\\files\\omnisys-joinmessages\\OmniJoinMessages-1.0.0.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-04-02T10:00:00.000Z",
+      "thumbnail": "/assets/images/omnisys-joinmessages/thumbnail.png",
+      "difficulty": 0,
+      "proudness": 1,
+      "features": [
+        "Join Messages",
+        "Leave Messages"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-joinmessages"
+    },
+    {
+      "id": "omnisys-privatemessages",
+      "title": "Omnisys PrivateMessages",
+      "description": "A Minecraft plugin that allows players to send private messages to each other. It provides a way for players to communicate without broadcasting their messages to the entire server.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": "/assets/files/omnisys-privatemessages/Omnisys-PrivateMessages-1.0.2.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-21T17:03:00.000Z",
+      "thumbnail": "/assets/images/omnisys-privatemessages/1.gif",
+      "difficulty": 1,
+      "proudness": 1,
+      "features": [
+        "Private Messaging"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-privatemessages"
+    },
+    {
+      "id": "omnisys-chestlocker",
+      "title": "Omnisys ChestLocker",
+      "description": "A Minecraft plugin that allows players to lock their chests and other containers. It provides a way for players to protect their items from theft or unauthorized access.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": "/assets/files/omnisys-chestlocker/Omnisys-ChestLocker-1.0.0.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-20T17:03:00.000Z",
+      "thumbnail": "/assets/images/omnisys-chestlocker/1.gif",
+      "difficulty": 1,
+      "proudness": 1,
+      "features": [
+        "Chest Locking"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-chestlocker"
+    },
+    {
+      "id": "omnisys-staffhomes",
+      "title": "Omnisys StaffHomes",
+      "description": "A Minecraft plugin that allows staff members to set and teleport to their own homes. It provides a convenient way for staff to manage their own spaces within the game.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": "/assets/files/omnisys-staffhomes/Omnisys-StaffHomes-1.0.0.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-19T17:03:00.000Z",
+      "thumbnail": "/assets/images/omnisys-staffhomes/1.gif",
+      "difficulty": 1,
+      "proudness": 1,
+      "features": [
+        "Staff Homes"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-staffhomes"
+    },
+    {
+      "id": "omnisys-launchpads",
+      "title": "Omnisys Launchpads",
+      "description": "A Minecraft plugin that adds launchpads to the game. Players can use launchpads to propel themselves into the air, allowing faster navigation.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": "/assets/files/omnisys-launchpads/Omnisys-Launchpads-1.0.0.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-18T17:03:00.000Z",
+      "thumbnail": "/assets/images/omnisys-launchpads/1.gif",
+      "difficulty": 1,
+      "proudness": 1,
+      "features": [
+        "Launchpads"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-launchpads"
+    },
+    {
+      "id": "omnisys-silktouchspawnerfix",
+      "title": "Omnisys SilkTouchSpawnerFix",
+      "description": "A simple plugin that fixes the issue of Silk Touch not working on spawners in Minecraft. It was a small but useful plugin for players who wanted to collect spawners without losing them.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": "/assets/files/omnisys-silktouchspawnerfix/Omnisys-SilkTouchSpawnerFix-1.0.2.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-17T11:00:00.000Z",
+      "thumbnail": "/assets/images/omnisys-silktouchspawnerfix/1.gif",
+      "difficulty": 1,
+      "proudness": 1,
+      "features": [
+        "Silk Touch Spawner Fix"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-silktouchspawnerfix"
+    },
+    {
+      "id": "omnisys-weatherdaycyclefix",
+      "title": "Omnisys WeatherDayCycleFix",
+      "description": "\"A simple WeatherCycle and DayCycle fix\" (2022), this plugin was designed to address issues related to the weather and day-night cycle in Minecraft. It provided a way to lock the weather and daylight cycle, for lobby/world management.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": ".\\assets\\files\\omnisys-weatherdaycyclefix\\OmnisysWeatherDayFix-1.0.1-HOTFIX.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-17T11:00:00.000Z",
+      "thumbnail": "/assets/images/omnisys-weatherdaycyclefix/thumbnail.png",
+      "difficulty": 0,
+      "proudness": 1,
+      "features": [
+        "Locked daylight cycle",
+        "Locked weather cycle",
+        "Configurable world settings"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-weatherdaycyclefix"
+    },
+    {
+      "id": "omnisys-vanish",
+      "title": "Omnisys Vanish",
+      "description": "\"A simple vanish plugin\" (2022), this plugin allowed players to become invisible to others on the server. It was a useful tool for server administrators and moderators who needed to monitor player activity without being seen.",
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
+      "link": ".\\assets\\files\\omnisys-vanish\\Omnisys-Vanish-1.0-Alpha.jar",
+      "category": "minecraft-plugin",
+      "date": "2022-03-14T11:00:00.000Z",
+      "thumbnail": "/assets/images/omnisys-vanish/thumbnail.png",
+      "difficulty": 0,
+      "proudness": 1,
+      "features": [
+        "Allow the player to become invisible",
+        "Player Tab Completion inhibited",
+        "Scoreboard and Tab nametag hidden",
+        "Vanish mode toggle command"
+      ],
+      "repository": "https://github.com/Sgattix/omnisys-vanish"
+    },
+    {
       "id": "omnisys-plugin-hider",
       "title": "Omnisys Plugin Hider",
       "description": "\"A simple plugin to hide other plugins\" this was the claim of the plugin, but it was actually much more than that. It was a plugin designed to hide the presence of other plugins on a Minecraft server, making it harder for players to detect and identify them. It achieved this by intercepting and modifying various server events and responses related to plugin information.",
-      "technologies": ["Java", "Spigot API", "NoteblockAPI"],
+      "technologies": [
+        "Java",
+        "Spigot API",
+        "NoteblockAPI"
+      ],
       "link": "/assets/files/omnisys-plugin-hider/Omnisys-Plugin-Hider-1.0.2-HOTFIX.jar",
       "category": "minecraft-plugin",
       "date": "2022-03-12T11:00:00.000Z",
@@ -35,7 +523,11 @@
       "id": "omnisuggester",
       "title": "OmniSuggester",
       "description": "A Discord bot designed to facilitate feature suggestions for my OmniCraft Minecraft server. It allows users to submit their ideas, upvote or downvote existing suggestions, and provides an anonymous submission option to encourage honest feedback.",
-      "technologies": ["TypeScript", "Discord.js", "Node.js"],
+      "technologies": [
+        "TypeScript",
+        "Discord.js",
+        "Node.js"
+      ],
       "link": "Private",
       "category": "discord-bot",
       "date": "2022-02-27T11:00:00.000Z",
@@ -66,7 +558,9 @@
       "id": "first-java-standalone-program",
       "title": "First Java Standalone Program",
       "description": "My first ever Java standalone program. It was a simple console application that allowed users to input their name and then greeted them with a personalized message. It was a great learning experience and helped me understand the basics of Java programming.",
-      "technologies": ["Java"],
+      "technologies": [
+        "Java"
+      ],
       "link": "Private",
       "category": "java-application",
       "date": "2021-12-23T00:00:00.000Z",
@@ -83,7 +577,10 @@
       "id": "omnisys-minecraft-plugin",
       "title": "Omnisys Minecraft Plugin",
       "description": "This was my first ever Minecraft plugin, developed for the OmniCraft Minecraft server. It wasn't that meaningful, but it was a great learning experience and a stepping stone to more complex projects.",
-      "technologies": ["Java", "Spigot API"],
+      "technologies": [
+        "Java",
+        "Spigot API"
+      ],
       "link": "/assets/files/omnisys-minecraft-plugin/omnisys-1.0.0.jar",
       "category": "minecraft-plugin",
       "date": "2021-12-08T00:00:00.000Z",
@@ -98,7 +595,11 @@
           "title": "Omnisys Minecraft Plugin v1.0.0-alpha - The first plugin",
           "description": "The first version of the Omnisys Minecraft plugin was a simple plugin that added a few basic commands and features to the OmniCraft server.",
           "date": "2021-12-08T00:00:00.000Z",
-          "features": ["God mode", "Join and leave messages", "Kill command"]
+          "features": [
+            "God mode",
+            "Join and leave messages",
+            "Kill command"
+          ]
         },
         {
           "id": "1.1.0-alpha",
@@ -120,9 +621,13 @@
       "id": "omnicraft-website",
       "title": "OmniCraft Website",
       "description": "The official website for the OmniCraft Minecraft server.",
-      "technologies": ["HTML", "CSS", "JavaScript"],
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
       "link": "https://sgattix.github.io/omnicraft-website/",
-      "category": "web-development",
+      "category": "web-app",
       "date": "2021-09-05T00:00:00.000Z",
       "thumbnail": "/assets/images/omnicraft-website/1.png",
       "difficulty": 1,
@@ -165,7 +670,11 @@
       "id": "omnisys-discord-bot",
       "title": "Omnisys",
       "description": "A multi-purpose Discord bot with a variety of features to enhance my discord server user experience.",
-      "technologies": ["TypeScript", "Discord.js", "Node.js"],
+      "technologies": [
+        "TypeScript",
+        "Discord.js",
+        "Node.js"
+      ],
       "link": "https://github.com/Sgattix/omnisys-discord-bot",
       "category": "discord-bot",
       "date": "2021-08-12T09:08:14.000Z",
@@ -190,7 +699,9 @@
           "title": "Omnisys v1.0.0-alpha - Love at first sight",
           "description": "Omnisys was actually my first programming project. Here's where I wrote my first line of code.",
           "date": "2021-08-14T09:08:14.000Z",
-          "features": ["Server information"]
+          "features": [
+            "Server information"
+          ]
         },
         {
           "id": "1.1.0-alpha",
@@ -237,14 +748,18 @@
           "title": "Omnisys v1.0.0-tickets - Ticketing System",
           "description": "The ticketing system was one of the most requested features for Omnisys. It allows users to create support tickets and receive assistance from moderators and staff members.",
           "date": "2022-02-23T16:55:00.000Z",
-          "features": ["Ticketing System"]
+          "features": [
+            "Ticketing System"
+          ]
         },
         {
           "id": "1.0.0-music",
           "title": "Omnisys v1.0.0-music - Music System",
           "description": "The music system was another highly requested feature for Omnisys. It allows users to play music in voice channels, create playlists, and control playback with various commands.",
           "date": "2023-03-13T17:03:00.000Z",
-          "features": ["Music System"]
+          "features": [
+            "Music System"
+          ]
         }
       ]
     }

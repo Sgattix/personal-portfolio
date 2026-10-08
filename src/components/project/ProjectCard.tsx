@@ -1,8 +1,10 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import type { Project } from "@/lib/project-types";
+import { useState } from "react";
 
 function ProjectCard({
   project,
@@ -12,18 +14,27 @@ function ProjectCard({
   children?: React.ReactNode;
 }) {
   const { id, thumbnail, title, description, technologies, link } = project;
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <div
       key={id}
       className="bg-neutral-800 p-4 rounded-md mb-4 shadow-[-10px_10px_0_rgba(255,255,255,0.05)] hover:shadow-[-20px_20px_0_rgba(255,255,255,0.1)] transition-shadow duration-300 flex flex-col"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {thumbnail !== "" && (
         <Image
-          src={thumbnail as string}
+          src={
+            thumbnail.endsWith(".gif") && isHovered
+              ? thumbnail
+              : thumbnail.replace(".gif", ".png")
+          }
           alt={title}
           width={400}
           height={200}
           className="rounded-md mb-4"
+          unoptimized={thumbnail.endsWith(".gif") ? true : false}
+          loading="lazy"
         />
       )}
       {thumbnail === "" && (

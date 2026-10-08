@@ -1,3 +1,4 @@
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { readProjects } from "@/lib/project-data";
 import { Metadata } from "next";
 
@@ -7,7 +8,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const projects = await readProjects();
+  const projects = await readProjects(await isAdminAuthenticated());
   const project = projects.find(
     (proj) => proj.id === id,
   ) as (typeof projects)[0];

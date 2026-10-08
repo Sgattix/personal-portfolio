@@ -1,6 +1,5 @@
 "use server";
 
-import { mkdir, writeFile, access } from "node:fs/promises";
 import path from "node:path";
 import { redirect } from "next/navigation";
 
@@ -12,6 +11,7 @@ import {
   verifyAdminPassword,
 } from "@/lib/admin-auth";
 import { readProjects, writeProjects } from "@/lib/project-data";
+import { deleteProjectImages, saveProjectImage } from "@/lib/storage";
 
 function getField(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -98,10 +98,26 @@ function parseNumber(value: string, fallback = 0): number {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+const PROJECT_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+// SVG is excluded on purpose: it can carry scripts and is served from /public.
+const ALLOWED_IMAGE_EXTENSIONS = new Set([
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".webp",
+  ".gif",
+  ".avif",
+]);
+
 function getFileExtension(file: File): string {
   const extension = path.extname(file.name).toLowerCase();
 
   if (extension) {
+    if (!ALLOWED_IMAGE_EXTENSIONS.has(extension)) {
+      throw new Error("invalid-file-type");
+    }
+
     return extension;
   }
 
@@ -116,10 +132,8 @@ function getFileExtension(file: File): string {
       return ".gif";
     case "image/avif":
       return ".avif";
-    case "image/svg+xml":
-      return ".svg";
     default:
-      return ".png";
+      throw new Error("invalid-file-type");
   }
 }
 
@@ -128,73 +142,36 @@ async function saveProjectThumbnail(
   file: File,
 ): Promise<string> {
   const extension = getFileExtension(file);
-  const folderPath = path.join(
-    process.cwd(),
-    "public",
-    "assets",
-    "images",
-    projectId,
-  );
-  const fileName = `thumbnail${extension}`;
-
-  await mkdir(folderPath, { recursive: true });
-
-  const fullPath = path.join(folderPath, fileName);
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  await writeFile(fullPath, buffer);
-
-  try {
-    await access(fullPath);
-  } catch (err) {
-    console.error(
-      "saveProjectThumbnail: file not found after write",
-      fullPath,
-      err,
-    );
-    throw err;
-  }
-
-  return `/assets/images/${projectId}/${fileName}`;
+  return saveProjectImage(
+    projectId,
+    `thumbnail${extension}`,
+    buffer,
+    file.type || "application/octet-stream",
+    "thumbnail",
+  );
 }
 
 async function saveGalleryImages(
   projectId: string,
   files: File[],
 ): Promise<string[]> {
-  if (files.length === 0) return [];
-
-  const folderPath = path.join(
-    process.cwd(),
-    "public",
-    "assets",
-    "images",
-    projectId,
-  );
-  await mkdir(folderPath, { recursive: true });
-
   const saved: string[] = [];
 
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    const ext = path.extname(file.name) || getFileExtension(file);
-    const name = `${Date.now()}-${i}${ext}`;
-    const full = path.join(folderPath, name);
+    const ext = getFileExtension(file);
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    console.log("saveGalleryImages: writing", full);
-
-    const buf = Buffer.from(await file.arrayBuffer());
-    await writeFile(full, buf);
-
-    try {
-      await access(full);
-      console.log("saveGalleryImages: wrote file", full);
-    } catch (err) {
-      console.error("saveGalleryImages: file not found after write", full, err);
-      throw err;
-    }
-
-    saved.push(`/assets/images/${projectId}/${name}`);
+    saved.push(
+      await saveProjectImage(
+        projectId,
+        `${Date.now()}-${i}${ext}`,
+        buffer,
+        file.type || "application/octet-stream",
+      ),
+    );
   }
 
   return saved;
@@ -205,6 +182,11 @@ function parseProject(formData: FormData, originalId = ""): Project {
 
   if (!id) {
     throw new Error("missing-id");
+  }
+
+  // The id is used as a folder name on disk, so it must be a safe slug.
+  if (!PROJECT_ID_PATTERN.test(id)) {
+    throw new Error("invalid-id");
   }
 
   const title = getField(formData, "title");
@@ -247,7 +229,10 @@ function parseProject(formData: FormData, originalId = ""): Project {
 
 function getReturnTarget(formData: FormData, fallback: string): string {
   const returnTo = getField(formData, "returnTo");
-  return returnTo || fallback;
+  // Only allow same-site admin paths to prevent open redirects.
+  return returnTo.startsWith("/admin/") && !returnTo.startsWith("//")
+    ? returnTo
+    : fallback;
 }
 
 export async function loginAction(formData: FormData): Promise<never> {
@@ -288,9 +273,6 @@ export async function saveProjectAction(formData: FormData): Promise<never> {
     redirect(`${returnTarget}?error=${message}`);
   }
 
-  // Log attempt to save files for debugging
-  console.log("saveProjectAction: saving files for project", project.id);
-
   const thumbnailFile = getFile(formData, "thumbnailFile");
 
   if (thumbnailFile) {
@@ -316,14 +298,31 @@ export async function saveProjectAction(formData: FormData): Promise<never> {
     }
   }
 
-  const currentProjects = await readProjects();
+  // Must read as admin: otherwise private projects are filtered out and lost on write.
+  const currentProjects = await readProjects(true);
+
+  if (
+    currentProjects.some(
+      (existingProject) =>
+        existingProject.id === project.id && existingProject.id !== originalId,
+    )
+  ) {
+    redirect(`${returnTarget}?error=duplicate-id`);
+  }
+
   const nextProjects = currentProjects.filter(
     (existingProject) => existingProject.id !== originalId,
   );
 
   nextProjects.push(project);
 
-  await writeProjects(nextProjects);
+  try {
+    await writeProjects(nextProjects);
+  } catch (err) {
+    console.error("writeProjects failed:", err);
+    redirect(`${returnTarget}?error=storage-write`);
+  }
+
   redirect(`/admin/projects/${project.id}?saved=1`);
 }
 
@@ -340,10 +339,21 @@ export async function deleteProjectAction(formData: FormData): Promise<never> {
     redirect("/admin?error=missing-id");
   }
 
-  const remainingProjects = (await readProjects()).filter(
+  const remainingProjects = (await readProjects(true)).filter(
     (project) => project.id !== projectId,
   );
 
-  await writeProjects(remainingProjects);
+  try {
+    await writeProjects(remainingProjects);
+
+    // Remove uploaded images too; the slug check keeps this inside the project's folder.
+    if (PROJECT_ID_PATTERN.test(projectId)) {
+      await deleteProjectImages(projectId);
+    }
+  } catch (err) {
+    console.error("deleteProjectAction failed:", err);
+    redirect("/admin?error=storage-write");
+  }
+
   redirect("/admin?deleted=1");
 }

@@ -5,28 +5,21 @@ import ProjectCarousel from "@/components/ui/ProjectCarousel";
 import Header from "@/components/ui/header";
 import { Badge } from "@/components/ui/badge";
 import { readProjects } from "@/lib/project-data";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { isAdminAuthenticated } from "@/lib/admin-auth";
 
 export const dynamic = "force-dynamic";
 
 async function Page({ params }: { params: { id: string } }) {
   params = await params;
-  const projects = await readProjects();
+  const projects = await readProjects(await isAdminAuthenticated());
   const project = projects.find(
     (proj) => proj.id === params.id,
   ) as (typeof projects)[0];
 
   if (!project) {
-    return (
-      <div className="flex w-full h-screen justify-center items-center flex-col">
-        <h1 className="text-6xl font-bold">404</h1>
-        <p className="text-lg uppercase tracking-widest">
-          Sorry, this project doesn&apos;t exist :/
-        </p>
-        <p className="text-sm text-muted-foreground uppercase tracking-widest">
-          Or maybe it got eaten by someone
-        </p>
-      </div>
-    );
+    notFound();
   }
 
   const {
@@ -44,11 +37,45 @@ async function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="px-8 md:px-12 lg:px-20 py-10 max-w-7xl mx-auto bg-neutral-950 rounded-4xl h-full mb-20 mt-32">
-      <div className="my-16">
-        <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
-        <p className="text-sm text-muted-foreground mt-2 uppercase tracking-widest">
-          {category.replace("-", " ")}
-        </p>
+      <div className="my-16 flex justify-between items-center flex-col md:flex-row gap-4">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
+          <p className="text-sm text-muted-foreground mt-2 uppercase tracking-widest">
+            {category.replace("-", " ")}
+          </p>
+        </div>
+
+        {/* Github Repo stats fetched */}
+        <Link
+          className="flex gap-4 mt-4"
+          href={`https://github.com/Sgattix/${params.id}`}
+          target="_blank"
+        >
+          <Image
+            src={`https://img.shields.io/github/stars/Sgattix/${params.id}?style=social`}
+            alt="GitHub stars"
+            width={100}
+            height={20}
+            className="rounded-lg"
+            unoptimized
+          />
+          <Image
+            src={`https://img.shields.io/github/forks/Sgattix/${params.id}?style=social`}
+            alt="GitHub forks"
+            width={100}
+            height={20}
+            className="rounded-lg"
+            unoptimized
+          />
+          <Image
+            src={`https://img.shields.io/github/issues/Sgattix/${params.id}?style=social`}
+            alt="GitHub issues"
+            width={100}
+            height={20}
+            className="rounded-lg"
+            unoptimized
+          />
+        </Link>
       </div>
       <div className="grid gap-8 lg:grid-cols-3 items-start">
         <section className="lg:col-span-2 flex flex-col gap-16">

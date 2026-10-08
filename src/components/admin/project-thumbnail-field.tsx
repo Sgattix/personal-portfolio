@@ -51,9 +51,17 @@ export function ProjectThumbnailField({
       </div>
 
       <Dropzone
-        accept={{ "image/*": [] }}
+        accept={{
+          "image/*": [
+            "image/png",
+            "image/jpeg",
+            "image/webp",
+            "image/avif",
+            "image/gif",
+          ],
+        }}
         maxFiles={1}
-        maxSize={5 * 1024 * 1024}
+        maxSize={50 * 1024 * 1024}
         src={selectedFile ? [selectedFile] : undefined}
         inputProps={{
           name: "thumbnailFile",

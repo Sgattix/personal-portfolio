@@ -15,6 +15,22 @@ import { VersionsEditor } from "@/components/admin/versions-editor";
 
 export const dynamic = "force-dynamic";
 
+const ERROR_MESSAGES: Record<string, string> = {
+  "invalid-versions": "Versions must be valid JSON.",
+  "missing-fields": "Fill in all required fields before saving.",
+  "missing-id": "A project id is required.",
+  "invalid-id":
+    "The id must be a lowercase slug (letters, numbers and single dashes).",
+  "duplicate-id": "Another project already uses this id.",
+  "invalid-date": "The date is not valid.",
+  "storage-write":
+    "Could not write to disk. This admin panel needs a host with a writable, persistent filesystem (not serverless).",
+  "save-thumbnail":
+    "Could not save the thumbnail. Only PNG, JPG, WEBP, GIF and AVIF are allowed.",
+  "save-gallery":
+    "Could not save gallery images. Only PNG, JPG, WEBP, GIF and AVIF are allowed.",
+};
+
 export default async function Page({
   params,
   searchParams,
@@ -30,7 +46,7 @@ export default async function Page({
 
   const { id } = await params;
   const paramsData = searchParams ? await searchParams : undefined;
-  const projects = await readProjects();
+  const projects = await readProjects(authenticated);
   const project =
     id === "new"
       ? createBlankProject()
@@ -68,14 +84,9 @@ export default async function Page({
           </Button>
         </div>
 
-        {paramsData?.error === "invalid-versions" && (
+        {paramsData?.error && (
           <p className="mb-6 rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-            Versions must be valid JSON.
-          </p>
-        )}
-        {paramsData?.error === "missing-fields" && (
-          <p className="mb-6 rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-            Fill in all required fields before saving.
+            {ERROR_MESSAGES[paramsData.error] ?? "Something went wrong while saving."}
           </p>
         )}
         {paramsData?.saved === "1" && (
@@ -88,7 +99,7 @@ export default async function Page({
           <form
             id="project-form"
             action={saveProjectAction}
-            method="post"
+            method="POST"
             encType="multipart/form-data"
             className="space-y-6 rounded-3xl border border-neutral-800 bg-neutral-900/70 p-6 shadow-2xl shadow-black/30"
           >
